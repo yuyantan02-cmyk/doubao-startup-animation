@@ -1,0 +1,21 @@
+.build/
+dist/
+.DS_Store
+__pycache__/
+
+# Personal media remains local; public builds use the included SVG samples.
+assets/*.jpg
+assets/*.jpeg
+assets/*.png
+
+*.mp4
+*.mov
+*.log
+*.tmp
+
+# Local credentials and editor state.
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/

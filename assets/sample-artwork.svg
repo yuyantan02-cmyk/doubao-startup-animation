@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024">
+  <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#2d182e"/><stop offset=".55" stop-color="#a35a82"/><stop offset="1" stop-color="#eed0d7"/></linearGradient></defs>
+  <rect width="1536" height="1024" fill="url(#g)"/>
+  <circle cx="950" cy="470" r="280" fill="#f4cfdb" opacity=".42"/>
+  <path d="M0 830 Q360 640 720 860 T1536 730 V1024 H0" fill="#321b31" opacity=".36"/>
+  <text x="100" y="510" fill="#fff4f8" font-family="sans-serif" font-size="96" letter-spacing="12">YOUR IMAGE</text>
+</svg>
