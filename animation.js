@@ -136,7 +136,8 @@
   if(native){
     document.body.classList.add('native');
   }
-  function ready(){if(loaded)return;loaded=true;render(0);send('ready');if(window.DOUBAO_STARTUP_OPEN_SETTINGS||new URLSearchParams(location.search).has('settings'))openSettings();else play();}
+  function wallpaperData(images){return {artwork:images.artwork||assets.artwork,video:images.video instanceof Blob?images.video:images.artwork?'':assets.video};}
+  function ready(){if(loaded)return;loaded=true;render(0);send('wallpaper',wallpaperData(savedImages));send('ready');if(window.DOUBAO_STARTUP_OPEN_SETTINGS||new URLSearchParams(location.search).has('settings'))openSettings();else play();}
   function failed(){stop();$('#asset-error').hidden=false;send('assetError');}
   let savedImages={},pendingImages={},busy=false;
   const settings=$('#settings-dialog'),status=$('#settings-status');
@@ -213,7 +214,7 @@
   $('#preview-images').addEventListener('click',async()=>{
     setBusy(true);status.textContent='正在保存…';
     try{
-      await applyImages(pendingImages);await window.imageSettings.save(pendingImages);savedImages={...pendingImages};settings.close('preview');
+      await applyImages(pendingImages);await window.imageSettings.save(pendingImages);savedImages={...pendingImages};send('wallpaper',wallpaperData(savedImages));settings.close('preview');
     }catch(error){await applyImages(savedImages);status.textContent='保存失败，原设置已保留：'+error.message;}
     finally{setBusy(false);}
   });

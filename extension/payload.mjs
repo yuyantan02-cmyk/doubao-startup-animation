@@ -4,7 +4,7 @@ import {installRenderer} from './renderer.mjs';
 
 export async function buildInjection(root){
   const read=name=>readFile(join(root,name));
-  const [html,css,settings,animation]=await Promise.all(['index.html','style.css','image-settings.js','animation.js'].map(read));
+  const [html,css,settings,animation,wallpaperCss]=await Promise.all(['index.html','style.css','image-settings.js','animation.js','extension/wallpaper.css'].map(read));
   const media=async(name,fallback,mime)=>{
     const [bytes,type]=await read(name).then(data=>[data,mime]).catch(()=>read(fallback).then(data=>[data,'image/svg+xml']));
     return `data:${type};base64,${bytes.toString('base64')}`;
@@ -18,7 +18,7 @@ export async function buildInjection(root){
     html:html.toString().replace(/<!doctype[^>]*>/ig,'').replace(/<html[^>]*>|<\/html>/ig,'')
       .replace(/<script\b[^>]*>[\s\S]*?<\/script>/ig,'').replace(/<link\b[^>]*>/ig,'')
       .replace(/<meta\b[^>]*http-equiv[^>]*>/ig,'').replace(/src="assets\/[^\"]*"/g,''),
-    css:css.toString(),assets:{avatar,artwork,video}
+    css:css.toString(),wallpaperCss:wallpaperCss.toString(),assets:{avatar,artwork,video}
   };
   const mount=`function(window){const document=window.document,location=window.location,performance=window.performance,indexedDB=window.indexedDB,Image=window.Image,URL=window.URL,module=undefined;const requestAnimationFrame=window.requestAnimationFrame.bind(window),cancelAnimationFrame=window.cancelAnimationFrame.bind(window);\n${settings}\n${animation}\n}`;
   return `(${installRenderer.toString()})(${JSON.stringify(payload)},${mount})`;

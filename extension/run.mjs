@@ -1,4 +1,4 @@
-import {execFile as rawExec} from 'node:child_process';
+import {execFile as rawExec,spawn} from 'node:child_process';
 import {promisify} from 'node:util';
 import {createServer} from 'node:net';
 import {realpath} from 'node:fs/promises';
@@ -51,7 +51,7 @@ async function main(){
       for(let attempt=0;attempt<50;attempt++){
         const answer=await client.call('Runtime.evaluate',{expression:'globalThis.__doubaoStartupExtension?.status()',returnByValue:true});
         const state=answer.result?.value;
-        if(state?.ready){console.log('已在豆包窗口开始播放。辅助进程现在退出；⌘⌥B 打开素材设置。');return;}
+        if(state?.ready){const watcher=spawn(process.execPath,[join(root,'extension/drive.mjs'),String(port),'mac',bundle],{detached:true,stdio:'ignore'});watcher.unref();console.log('已在豆包窗口开始播放。辅助进程现在退出；⌘⌥B 打开素材设置。');return;}
         if(state?.phase==='failed'||state?.phase==='timeout')throw new Error('动画素材加载失败，覆盖层已移除');
         await delay(100);
       }

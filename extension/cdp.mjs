@@ -1,7 +1,7 @@
 export function pageTarget(target){
   try{
     const url=new URL(target.url);
-    return target.type==='page'&&url.protocol==='doubao:'&&url.hostname==='doubao-chat'&&url.pathname==='/chat';
+    return target.type==='page'&&url.protocol==='doubao:'&&['doubao-chat','doubao-launcher'].includes(url.hostname)&&(url.pathname==='/chat'||url.pathname.startsWith('/chat/drive/'));
   }catch{return false;}
 }
 export function localSocket(value,port){

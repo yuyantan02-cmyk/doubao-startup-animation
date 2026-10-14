@@ -1,9 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {connect,localSocket,pageTarget} from '../extension/cdp.mjs';
+import {validateListeners} from '../extension/run-win.mjs';
+import {driveTarget} from '../extension/drive.mjs';
+import {buildInjection} from '../extension/payload.mjs';
+import {fileURLToPath} from 'node:url';
 test('只选择豆包主窗口，拒绝网站及辅助窗口',()=>{
   assert.equal(pageTarget({type:'page',url:'doubao://doubao-chat/chat'}),true);
+  assert.equal(pageTarget({type:'page',url:'doubao://doubao-launcher/chat'}),true);
+  assert.equal(pageTarget({type:'page',url:'doubao://doubao-chat/chat/drive/home/'}),true);
   for(const url of ['https://example.com/index.html','app://other/index.html','about:blank','doubao://doubao-chat/settings','doubao://other/chat'])assert.equal(pageTarget({type:'page',url}),false);
+});
+test('云盘样式只注入豆包官方云盘 iframe',()=>{
+  assert.equal(driveTarget({type:'iframe',url:'https://www.doubao.com/drive-iframe/drive/home/'}),true);
+  for(const url of ['https://evil.example/drive-iframe/drive/home/','https://www.doubao.com/other/drive/','http://www.doubao.com/drive-iframe/drive/home/'])assert.equal(driveTarget({type:'iframe',url}),false);
+  assert.equal(driveTarget({type:'page',url:'https://www.doubao.com/drive-iframe/drive/home/'}),false);
+});
+test('Windows 端口必须由选定的豆包程序独占并仅监听本机',()=>{
+  const exe='C:\\Program Files\\Doubao\\app\\Doubao.exe',record={LocalAddress:'127.0.0.1',LocalPort:9341,ExecutablePath:exe};
+  assert.doesNotThrow(()=>validateListeners([record],exe.toUpperCase(),9341));
+  for(const changed of [{LocalAddress:'0.0.0.0'},{LocalPort:9222},{ExecutablePath:'C:\\Other\\Doubao.exe'}])assert.throws(()=>validateListeners([{...record,...changed}],exe,9341));
+  assert.throws(()=>validateListeners([],exe,9341));
 });
 test('只连接指定回环端口的页面 websocket',()=>{
   assert.equal(localSocket('ws://127.0.0.1:9341/devtools/page/1',9341),'ws://127.0.0.1:9341/devtools/page/1');
@@ -18,4 +35,9 @@ test('请求匹配、错误和超时后可正常关闭',async()=>{
   const client=await connect('ws://test',FakeSocket);
   assert.deepEqual(await Promise.all([client.call('first'),client.call('second')]),[{ok:'first'},{ok:'second'}]);
   await assert.rejects(client.call('error'),/denied/);await assert.rejects(client.call('timeout',{},10),/超时/);client.close();
+});
+test('启动脚本包含动态主界面和白块修复',async()=>{
+  const script=await buildInjection(fileURLToPath(new URL('..',import.meta.url)));
+  assert.match(script,/doubao-startup-wallpaper/);
+  assert.match(script,/greeting-text-Q0pGud::after/);
 });

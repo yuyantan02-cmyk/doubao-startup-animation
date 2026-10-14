@@ -1,4 +1,5 @@
 import AppKit
+import UniformTypeIdentifiers
 
 final class ExtensionDelegate: NSObject, NSApplicationDelegate {
     var process: Process?
@@ -9,6 +10,35 @@ final class ExtensionDelegate: NSObject, NSApplicationDelegate {
     }
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        if CommandLine.arguments.contains("--icon-settings") || NSEvent.modifierFlags.contains(.option) {
+            NSApp.activate(ignoringOtherApps: true)
+            let alert = NSAlert()
+            alert.messageText = "设置启动器图标"
+            alert.informativeText = "选择照片制作圆角 Dock 图标，也可以恢复默认图标。"
+            alert.addButton(withTitle: "选择照片")
+            alert.addButton(withTitle: "恢复默认")
+            alert.addButton(withTitle: "取消")
+            let choice = alert.runModal()
+            guard choice != .alertThirdButtonReturn else { NSApp.terminate(nil); return }
+            do {
+                var source: URL?
+                if choice == .alertFirstButtonReturn {
+                    let panel = NSOpenPanel()
+                    panel.allowedContentTypes = [.png, .jpeg, .webP]
+                    panel.allowsMultipleSelection = false
+                    panel.message = "选择要显示在 Dock 的照片"
+                    guard panel.runModal() == .OK, let selected = panel.url else { NSApp.terminate(nil); return }
+                    source = selected
+                }
+                try LauncherIcon.install(source, in: Bundle.main.bundleURL)
+                let done = NSAlert()
+                done.messageText = "图标已更新"
+                done.informativeText = "Dock 将重新显示启动器图标。"
+                done.runModal()
+                NSApp.terminate(nil)
+            } catch { fail(error.localizedDescription) }
+            return
+        }
         guard let app = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.bot.neotix.doubao") else { fail("没有找到豆包应用。"); return }
         let running = NSRunningApplication.runningApplications(withBundleIdentifier: "com.bot.neotix.doubao")
         if CommandLine.arguments.contains("--probe") {
@@ -51,7 +81,11 @@ final class ExtensionDelegate: NSObject, NSApplicationDelegate {
         do { try runner.run() } catch { fail("无法运行扩展：\(error.localizedDescription)") }
     }
 }
-let app = NSApplication.shared
-let delegate = ExtensionDelegate()
-app.delegate = delegate
-app.run()
+@main struct Launcher {
+    static func main() {
+        let app = NSApplication.shared
+        let delegate = ExtensionDelegate()
+        app.delegate = delegate
+        app.run()
+    }
+}

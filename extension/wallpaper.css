@@ -1,0 +1,46 @@
+/* Doubao 2.24: keep the native controls, replace only the chat shell surfaces. */
+html[data-doubao-startup-skin],html[data-doubao-startup-skin] body{background:#211a22!important}
+html[data-doubao-startup-skin] #doubao-startup-wallpaper{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+html[data-doubao-startup-skin] #doubao-startup-wallpaper :is(img,video){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.63)}
+html[data-doubao-startup-skin] #doubao-startup-wallpaper video{opacity:0}
+html[data-doubao-startup-skin] #doubao-startup-wallpaper video.is-playing{opacity:1}
+html[data-doubao-startup-skin] #root{position:relative;z-index:1;background:transparent!important}
+html[data-doubao-startup-skin] #chat-route-layout{
+  --dbx-text-primary:#fff4f7;--dbx-text-secondary:#f5dfe9cc;--dbx-text-tertiary:#efd4e0aa;
+  --dbx-text-markdown:#fff4f7;--s-color-text-primary:#fff4f7;--s-color-text-secondary:#f5dfe9;
+  --s-color-text-tertiary:#f1d9e4bb;--semi-color-text-0:#fff4f7;--semi-color-text-1:#f5dfe9;
+  --input-guidance-input-container-background:rgba(93,68,83,.57);
+  --input-guidance-input-container-border-color:rgba(255,232,243,.24);
+  --dbx-bg-body-overlay-white:rgba(116,87,101,.49);
+  color:#fff4f7!important;background:transparent!important
+}
+html[data-doubao-startup-skin] #chat-route-main,
+html[data-doubao-startup-skin] #chat-route-layout main{background:transparent!important}
+html[data-doubao-startup-skin] #flow_chat_sidebar{background:rgba(51,33,45,.42)!important;border-color:rgba(255,233,244,.12)!important}
+html[data-doubao-startup-skin] #flow_chat_sidebar :is(button,a,[role=button]):hover{background:rgba(255,233,244,.12)!important}
+html[data-doubao-startup-skin] #flow_chat_sidebar [aria-current="page"]{background:rgba(255,233,244,.17)!important;color:#fff4f7!important;box-shadow:none!important}
+html[data-doubao-startup-skin] #flow-chat-guidance-page :is(h1,h2,h3){color:#fff4f7!important}
+html[data-doubao-startup-skin] #flow-chat-guidance-page .greeting-text-Q0pGud::after{display:none!important}
+html[data-doubao-startup-skin] #flow-chat-guidance-page #experiment-guidance-suggestions button{background:rgba(83,59,73,.37)!important;border-color:rgba(255,233,244,.24)!important;color:#fff4f7!important}
+html[data-doubao-startup-skin] #input-engine-container{box-shadow:0 8px 28px rgba(34,17,28,.17)!important}
+html[data-doubao-startup-skin] #input-engine-container::after{border-color:rgba(255,232,243,.24)!important}
+html[data-doubao-startup-skin] #input-engine-container>div{background:rgba(93,68,83,.57)!important;border:1px solid rgba(255,232,243,.24)!important}
+html[data-doubao-startup-skin] #input-engine-container textarea{color:#fff4f7!important}
+html[data-doubao-startup-skin] #input-engine-container textarea::placeholder{color:#ead0ddbb!important}
+html[data-doubao-startup-skin] #input-engine-container :is(button,span,svg){color:#fff0f6!important}
+html[data-doubao-startup-skin] #flow-chat-guidance-page [class*="bg-dbx-bg-body-overlay"]{background:rgba(116,87,101,.49)!important}
+html[data-doubao-startup-skin] [data-slot="dropdown-menu-content"],
+html[data-doubao-startup-skin] [data-slot="dropdown-menu-sub-content"],
+html[data-doubao-startup-skin] [data-slot="popover-content"],
+html[data-doubao-startup-skin] [role="dialog"].bg-dbx-bg-float{background:rgba(97,70,86,.88)!important;border:1px solid rgba(255,232,243,.3)!important;box-shadow:0 10px 30px rgba(35,19,30,.25)!important;color:#fff4f7!important}
+html[data-doubao-startup-skin] [data-slot="dropdown-menu-content"] *,
+html[data-doubao-startup-skin] [data-slot="dropdown-menu-sub-content"] *,
+html[data-doubao-startup-skin] [data-slot="popover-content"] :is(button,span),
+html[data-doubao-startup-skin] [role="dialog"].bg-dbx-bg-float *{color:#fff4f7!important}
+html[data-doubao-startup-skin] [data-slot="dropdown-menu-content"] :is([role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"]):hover{background:rgba(255,232,243,.16)!important}
+html[data-doubao-startup-skin] #chat-route-layout [class*="chrome70-container"]{background:transparent!important}
+html[data-doubao-startup-skin] #chat-route-layout [class*="chrome70-container"] .bg-s-color-bg-body{background:transparent!important}
+html[data-doubao-startup-skin] #chat-route-layout [class*="chrome70-container"] :is([class*="page-title-wrapper"],[data-testid="skill-page-title"]){color:#fff4f7!important}
+html[data-doubao-startup-skin] #chat-route-layout [class*="image-edit-button-content"]{background:rgba(103,76,91,.48)!important;border:1px solid rgba(255,232,243,.22)!important}
+html[data-doubao-startup-skin] #chat-route-layout [class*="image-edit-button-content"] *{color:#fff4f7!important}
+html[data-doubao-startup-skin] #chat-route-layout [class*="chrome70-container"] #input-engine-container [data-slot="tabs-trigger"][data-state="active"]{background:rgba(255,232,243,.18)!important;color:#fff4f7!important}

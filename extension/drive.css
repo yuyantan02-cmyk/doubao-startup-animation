@@ -1,0 +1,9 @@
+/* The cloud drive is a separate Chromium iframe; its default canvas must also be transparent. */
+html{--dbx-bg-base-5:transparent;--text-title:#fff4f7;--text-caption:#efdce5;--dbx-text-primary:#fff4f7;--dbx-text-secondary:#efdce5}
+html,body,#root,#root>div,.doubao-drive-iframe-container,#mainContainer,.app-main-container,.table-view-cell,.table-view-cell-group{background:transparent!important;color:#fff4f7!important}
+.doubao-drive-iframe-container :is(span,a,button,p,h1,h2,h3),.workspace-home-tab-container *{color:#fff4f7!important}
+.doubao-drive-iframe-container [class*="cell"]:hover,.doubao-drive-iframe-container [class*="row"]:hover{background:rgba(111,76,96,.35)!important}
+.ud__radio-group{background:rgba(101,72,90,.42)!important}
+html body #root .ud__radio-group .ud__radio-button__wrapper--checked,.ud__radio-button__wallpaper{background:rgba(142,102,124,.55)!important}
+html body #root .table-view-header-text{color:#fff4f7!important}
+#root>div>[style*="grid-area: 2 / 2"]{background:transparent!important;color:#efdce5!important}
