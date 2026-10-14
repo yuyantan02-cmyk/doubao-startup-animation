@@ -6,7 +6,7 @@ macOS 和 Windows 上的豆包启动动画与动态主界面。点击独立启�
 
 ## macOS 使用
 
-1. 安装官方豆包和 Node.js 20+。从 Releases 下载 `豆包动态启动-macOS-Intel.zip`，解压后将 `.app` 放到「应用程序」文件夹。该包在 Intel Mac 构建；Apple 芯片机型需要 Rosetta，目前未在该机型实测。
+1. 安装官方豆包和 Node.js 20+。从 Releases 下载 `doubao-startup-macos-intel.zip`，解压后将 `.app` 放到「应用程序」文件夹。该包在 Intel Mac 构建；Apple 芯片机型需要 Rosetta，目前未在该机型实测。
 2. 双击「豆包动态启动.app」，也可将它拖到 Dock。此应用采用本机临时签名、未经 Apple 公证；首次若被系统拦截，请在系统设置的隐私与安全性页面选择「仍要打开」。
 3. 豆包已运行时，启动器会提示先保存未发送的内容，再退出并重开。
 4. 在豆包窗口按 `⌘⌥B` 打开素材设置；可替换头像、主画面、动态视频和三处文字。点击「保存并预览」后，素材保存在本机的 IndexedDB，主界面背景随之更新。按 `Esc` 可跳过动画。
@@ -16,7 +16,7 @@ macOS 和 Windows 上的豆包启动动画与动态主界面。点击独立启�
 
 ## Windows 使用
 
-1. 从[豆包官网](https://www.doubao.com/download/desktop)安装桌面版豆包。从 Releases 下载并解压 `豆包动态启动-Windows.zip` 到 Windows 本地磁盘；压缩包已包含 Windows x64 运行程序，无需另装 Node.js。
+1. 从[豆包官网](https://www.doubao.com/download/desktop)安装桌面版豆包。从 Releases 下载并解压 `doubao-startup-windows-x64.zip` 到 Windows 本地磁盘；压缩包已包含 Windows x64 运行程序，无需另装 Node.js。
 2. 双击解压目录中的 `Windows/豆包动态启动.cmd`。首次运行选择豆包安装目录中的 `Doubao.exe`；若存在 `app/Doubao.exe`，启动器会使用该主程序。以后会记住所选路径。
 3. 如果豆包已经在运行，请先保存未发送的内容并完全退出，再双击启动器。进入豆包后按 `Ctrl+Alt+B` 更换头像、画面、视频和文字；按 `Esc` 跳过动画。
 
