@@ -12,7 +12,7 @@ description: Install, customize, or build the open-source Doubao dynamic startup
 ## 安装与使用
 
 - Windows x64：下载 Release 中的 `doubao-startup-windows-x64.zip`，解压后运行 `Windows/豆包动态启动.cmd`，首次选择官方 `Doubao.exe`。在豆包中按 `Ctrl+Alt+B` 更换图片、视频和文字。
-- macOS：Apple 芯片下载 `doubao-startup-macos-apple-silicon.zip`（原生 arm64，无需 Rosetta），Intel 下载 `doubao-startup-macos-intel.zip`。解压并打开 `.app`，需要官方豆包及 Node.js 20+。Apple 芯片版尚未实机验收。按 `⌘⌥B` 更换素材；按住 `⌥` 点击启动器可更换圆角 Dock 图标。
+- macOS：Apple 芯片下载 `doubao-startup-macos-apple-silicon.zip`（原生 arm64，无需 Rosetta），Intel 下载 `doubao-startup-macos-intel.zip`。解压并打开 `.app`，需要官方豆包及 Node.js 20+。已通过 M1 环境的构建、签名和架构检查，尚未验收豆包内动画播放。按 `⌘⌥B` 更换素材；按住 `⌥` 点击启动器可更换圆角 Dock 图标。
 - 启动前提醒用户保存未发送的内容；启动动画需要关闭并重新打开豆包。不要静默结束正在运行的豆包。按 `Esc` 跳过动画。
 - 若 macOS 阻止打开未公证应用，使用系统提供的“仍要打开”流程；不要要求关闭 Gatekeeper。
 

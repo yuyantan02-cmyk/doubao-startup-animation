@@ -6,7 +6,7 @@ macOS 和 Windows 上的豆包启动动画与动态主界面。点击独立启�
 
 ## macOS 使用
 
-1. 安装官方豆包和 Node.js 20+。Apple 芯片 Mac 从 Releases 下载 `doubao-startup-macos-apple-silicon.zip`，Intel Mac 下载 `doubao-startup-macos-intel.zip`；解压后将 `.app` 放到「应用程序」文件夹。Apple 芯片版为原生 arm64，不需要 Rosetta；尚未在 Apple 芯片实机验收。
+1. 安装官方豆包和 Node.js 20+。Apple 芯片 Mac 从 Releases 下载 `doubao-startup-macos-apple-silicon.zip`，Intel Mac 下载 `doubao-startup-macos-intel.zip`；解压后将 `.app` 放到「应用程序」文件夹。Apple 芯片版为原生 arm64，不需要 Rosetta；已在 GitHub 的 M1 运行环境通过构建、签名及架构检查，尚未在装有豆包的 Apple 芯片电脑上验收动画播放。
 2. 双击「豆包动态启动.app」，也可将它拖到 Dock。此应用采用本机临时签名、未经 Apple 公证；首次若被系统拦截，请在系统设置的隐私与安全性页面选择「仍要打开」。
 3. 豆包已运行时，启动器会提示先保存未发送的内容，再退出并重开。
 4. 在豆包窗口按 `⌘⌥B` 打开素材设置；可替换头像、主画面、动态视频和三处文字。点击「保存并预览」后，素材保存在本机的 IndexedDB，主界面背景随之更新。按 `Esc` 可跳过动画。
@@ -20,7 +20,7 @@ macOS 和 Windows 上的豆包启动动画与动态主界面。点击独立启�
 2. 双击解压目录中的 `Windows/豆包动态启动.cmd`。首次运行选择豆包安装目录中的 `Doubao.exe`；若存在 `app/Doubao.exe`，启动器会使用该主程序。以后会记住所选路径。
 3. 如果豆包已经在运行，请先保存未发送的内容并完全退出，再双击启动器。进入豆包后按 `Ctrl+Alt+B` 更换头像、画面、视频和文字；按 `Esc` 跳过动画。
 
-Windows 版与 macOS 版使用相同的页面样式和素材设置。公开压缩包只含示例图；可自行放入 `assets/avatar.jpg`、`assets/artwork.jpg`、`assets/startup.mp4`，或在豆包内用快捷键替换。首次运行的脚本会检查所选豆包程序的 Windows 签名，且只连接该程序在 `127.0.0.1` 打开的调试端口。启动器是普通批处理入口，首次运行可能出现终端窗口。当前版本尚未在 Windows 实机验证，豆包版本更新也可能改变内部页面地址；如果出现“尚未找到主窗口”，请反馈该版本号。
+Windows 版与 macOS 版使用相同的页面样式和素材设置。公开压缩包只含示例图；可自行放入 `assets/avatar.jpg`、`assets/artwork.jpg`、`assets/startup.mp4`，或在豆包内用快捷键替换。首次运行的脚本会检查所选豆包程序的 Windows 签名，且只连接该程序在 `127.0.0.1` 打开的调试端口。启动器是普通批处理入口，首次运行可能出现终端窗口。发布包已在 Windows x64 运行环境通过运行时、脚本和逻辑检查；尚未在装有豆包的 Windows 电脑上验收动画播放。豆包版本更新也可能改变内部页面地址；如果出现“尚未找到主窗口”，请反馈该版本号。
 
 ## 构建
 
