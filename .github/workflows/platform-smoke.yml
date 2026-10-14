@@ -16,6 +16,13 @@ jobs:
           test "$(lipo -archs "$app/Contents/MacOS/DoubaoStartup")" = arm64
           codesign --verify --deep --strict "$app"
           test "$(defaults read "$PWD/$app/Contents/Info" LSMinimumSystemVersion)" = 12.0
+      - name: Check published Apple Silicon package
+        run: |
+          curl -fsSL 'https://github.com/yuyantan02-cmyk/doubao-startup-animation/releases/download/v0.2.1/doubao-startup-macos-apple-silicon.zip' -o released.zip
+          ditto -x -k released.zip released
+          app='released/豆包动态启动-AppleSilicon.app'
+          test "$(lipo -archs "$app/Contents/MacOS/DoubaoStartup")" = arm64
+          codesign --verify --deep --strict "$app"
 
   windows-x64:
     runs-on: windows-2022
