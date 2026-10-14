@@ -1,0 +1,36 @@
+name: Platform smoke
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apple-silicon:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: test "$(uname -m)" = arm64
+      - run: node --test tools/extension.test.mjs
+      - run: ./tools/build.sh arm64
+      - run: |
+          app='dist/豆包动态启动-AppleSilicon.app'
+          test "$(lipo -archs "$app/Contents/MacOS/DoubaoStartup")" = arm64
+          codesign --verify --deep --strict "$app"
+          test "$(defaults read "$PWD/$app/Contents/Info" LSMinimumSystemVersion)" = 12.0
+
+  windows-x64:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check published Windows runtime and launcher
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://github.com/yuyantan02-cmyk/doubao-startup-animation/releases/download/v0.2.1/doubao-startup-windows-x64.zip' -OutFile bundle.zip
+          Expand-Archive bundle.zip -DestinationPath bundle
+          $root = 'bundle/豆包动态启动-Windows'
+          $node = Join-Path $root 'runtime/node.exe'
+          if ((& $node -p 'process.platform + "/" + process.arch') -ne 'win32/x64') { throw 'Windows runtime architecture mismatch' }
+          $tokens = $null; $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path (Join-Path $root 'Windows/launch.ps1')), [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors) { throw ($errors | Out-String) }
+          & $node --check (Join-Path $root 'extension/run-win.mjs')
+          & $node --test tools/extension.test.mjs
