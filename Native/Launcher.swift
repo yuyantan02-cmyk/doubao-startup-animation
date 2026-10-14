@@ -67,7 +67,7 @@ final class ExtensionDelegate: NSObject, NSApplicationDelegate {
             guard existing.isTerminated else { fail("豆包尚未退出，请完成应用中的退出提示后重试。"); return }
         }
         let runner = Process(), output = Pipe()
-        let nodes = ["\(NSHomeDirectory())/.local/bin/node", "/opt/homebrew/bin/node", "/usr/local/bin/node"]
+        let nodes = ["/opt/homebrew/bin/node", "\(NSHomeDirectory())/.local/bin/node", "/usr/local/bin/node"]
         guard let node = nodes.first(where: { FileManager.default.isExecutableFile(atPath: $0) }) else { fail("没有找到 Node.js 20+。请先安装 Node.js 后重试。"); return }
         runner.executableURL = URL(fileURLWithPath: node)
         runner.arguments = [Bundle.main.resourceURL!.appendingPathComponent("web/extension/run.mjs").path, "--bundle", app.path]

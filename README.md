@@ -6,7 +6,7 @@ macOS 和 Windows 上的豆包启动动画与动态主界面。点击独立启�
 
 ## macOS 使用
 
-1. 安装官方豆包和 Node.js 20+。从 Releases 下载 `doubao-startup-macos-intel.zip`，解压后将 `.app` 放到「应用程序」文件夹。该包在 Intel Mac 构建；Apple 芯片机型需要 Rosetta，目前未在该机型实测。
+1. 安装官方豆包和 Node.js 20+。Apple 芯片 Mac 从 Releases 下载 `doubao-startup-macos-apple-silicon.zip`，Intel Mac 下载 `doubao-startup-macos-intel.zip`；解压后将 `.app` 放到「应用程序」文件夹。Apple 芯片版为原生 arm64，不需要 Rosetta；尚未在 Apple 芯片实机验收。
 2. 双击「豆包动态启动.app」，也可将它拖到 Dock。此应用采用本机临时签名、未经 Apple 公证；首次若被系统拦截，请在系统设置的隐私与安全性页面选择「仍要打开」。
 3. 豆包已运行时，启动器会提示先保存未发送的内容，再退出并重开。
 4. 在豆包窗口按 `⌘⌥B` 打开素材设置；可替换头像、主画面、动态视频和三处文字。点击「保存并预览」后，素材保存在本机的 IndexedDB，主界面背景随之更新。按 `Esc` 可跳过动画。
@@ -29,10 +29,11 @@ macOS 构建需要 macOS 12+、Xcode 命令行工具和 Node.js 20+。Windows �
 ```sh
 node --test tools/extension.test.mjs
 ./tools/build.sh
+./tools/build.sh arm64
 ./tools/build-windows.sh
 ```
 
-产物在 `dist/豆包动态启动.app` 和 `dist/豆包动态启动-Windows.zip`。可选的本地默认素材是 `assets/avatar.jpg`、`assets/artwork.jpg` 和 `assets/startup.mp4`；没有这些文件时使用仓库内的示例 SVG，视频部分留空。个人媒体文件和构建产物被 `.gitignore` 排除，公开仓库只包含可替换的源码与示例素材。
+产物在 `dist/豆包动态启动.app`（Intel）、`dist/豆包动态启动-AppleSilicon.app`（Apple 芯片）和 `dist/豆包动态启动-Windows.zip`。可选的本地默认素材是 `assets/avatar.jpg`、`assets/artwork.jpg` 和 `assets/startup.mp4`；没有这些文件时使用仓库内的示例 SVG，视频部分留空。个人媒体文件和构建产物被 `.gitignore` 排除，公开仓库只包含可替换的源码与示例素材。
 
 ## Codex Skill
 
