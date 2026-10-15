@@ -10,13 +10,17 @@ try {
         $picker.Filter = '豆包程序 (Doubao.exe)|Doubao.exe'
         if ($picker.ShowDialog() -ne [System.Windows.Forms.DialogResult]::OK) { exit 0 }
         $selected = $picker.FileName
-        New-Item -ItemType Directory -Force -Path (Split-Path -Parent $saved) | Out-Null
-        Set-Content -LiteralPath $saved -Value $selected -NoNewline -Encoding UTF8
     }
     $exe = Join-Path (Split-Path -Parent $selected) 'app\Doubao.exe'
     if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { $exe = $selected }
     if ((Split-Path -Leaf $exe) -ine 'Doubao.exe') { throw '请选择官方豆包的 Doubao.exe。' }
-    if ((Get-AuthenticodeSignature -LiteralPath $exe).Status -ne 'Valid') { throw '豆包程序的 Windows 签名无效，请从官网重新安装。' }
+    $signature = Get-AuthenticodeSignature -LiteralPath $exe
+    if ($signature.Status -ne 'Valid') {
+        Remove-Item -LiteralPath $saved -ErrorAction SilentlyContinue
+        throw "豆包程序未通过签名检查（$($signature.Status)）：$exe。下次启动请重新选择官网安装的 Doubao.exe。"
+    }
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $saved) | Out-Null
+    Set-Content -LiteralPath $saved -Value $selected -NoNewline -Encoding UTF8
     if (Get-Process -Name Doubao -ErrorAction SilentlyContinue) { throw '豆包已运行。请保存未发送的内容，完全退出豆包后再双击启动器。' }
     $node = Join-Path $root 'runtime\node.exe'
     if (-not (Test-Path -LiteralPath $node -PathType Leaf)) { $node = (Get-Command node.exe -ErrorAction Stop).Source }
