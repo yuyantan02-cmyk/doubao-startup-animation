@@ -37,7 +37,9 @@ jobs:
           $node = Join-Path $root 'runtime/node.exe'
           if ((& $node -p 'process.platform + "/" + process.arch') -ne 'win32/x64') { throw 'Windows runtime architecture mismatch' }
           $tokens = $null; $errors = $null
-          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path (Join-Path $root 'Windows/launch.ps1')), [ref]$tokens, [ref]$errors) | Out-Null
-          if ($errors) { throw ($errors | Out-String) }
+          foreach ($script in @('Windows/launch.ps1', (Join-Path $root 'Windows/launch.ps1'))) {
+            [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $script), [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors) { throw ($errors | Out-String) }
+          }
           & $node --check (Join-Path $root 'extension/run-win.mjs')
           & $node --test tools/extension.test.mjs
